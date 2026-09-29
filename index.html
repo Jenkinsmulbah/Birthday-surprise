@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#831843">
+  <meta name="description" content="A little birthday experience made especially for Boimalyn.">
+  <title>Happy Birthday, Boimalyn</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="locked">
+
+  <div class="ambient" aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+
+  <div class="candle-celebration hidden" id="candleCelebration" aria-live="assertive">
+    <div class="candle-celebration-card">
+      <span class="celebration-kicker">CANDLE DOWN</span>
+      <strong id="candleCelebrationTitle">OKAYYY, YOU ATE THAT.</strong>
+      <span id="candleCelebrationText">One more candle closer.</span>
+    </div>
+  </div>
+
+  <aside class="miss-minute" id="missMinute" aria-live="polite">
+    <div class="mm-avatar" aria-hidden="true">MM</div>
+    <div class="mm-bubble" id="missMinuteText">Preparing your birthday experience...</div>
+  </aside>
+
+  <!-- 60 SECOND COUNTDOWN -->
+  <section class="experience-screen countdown-screen" id="countdownScreen">
+    <div class="countdown-top">
+      <p class="eyebrow">A little birthday experience</p>
+      <h1>Something is waiting for you.</h1>
+    </div>
+
+    <div class="countdown-stage">
+      <div class="quote quote-top" id="countdownQuote" aria-live="polite"></div>
+
+      <div class="timer-ring">
+        <svg viewBox="0 0 220 220" aria-hidden="true">
+          <circle class="ring-track" cx="110" cy="110" r="96"></circle>
+          <circle class="ring-progress" id="ringProgress" cx="110" cy="110" r="96"></circle>
+        </svg>
+        <div class="timer-number" id="countdownNumber" aria-live="polite" aria-atomic="true">60</div>
+        <span>seconds</span>
+      </div>
+    </div>
+
+    <div class="mm-host countdown-mm-host" id="mmHostCountdown"></div>
+    <p class="countdown-note">Don't rush. Just enjoy the moment.</p>
+
+    <audio id="prayerAudio" preload="auto">
+      <source src="audio/birthday-prayer.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="headphone-alert" id="headphoneAlert" role="dialog" aria-modal="true" aria-labelledby="headphoneTitle" aria-describedby="headphoneText">
+      <div class="headphone-card">
+        <div class="headphone-icon" aria-hidden="true">♫</div>
+        <p class="eyebrow">Before we begin</p>
+        <h2 id="headphoneTitle">Put on your AirPods.</h2>
+        <p id="headphoneText">For the full experience, put on your AirPods or headphones, turn the volume up to a comfortable level, and then let Miss Minute take it from here.</p>
+        <button class="primary-btn" id="startCountdown" type="button">I'm ready</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- CANDLE RITUAL -->
+  <section class="experience-screen ritual-screen hidden" id="candleScreen">
+    <button class="back-btn" data-prev-screen="countdownScreen" type="button">← Back</button>
+    <div class="mm-host" id="mmHostCandle"></div>
+    <div class="ritual-card">
+      <p class="eyebrow">The birthday ritual</p>
+      <h2>Before we continue...</h2>
+      <p class="lead" id="candleStatus">
+        Every birthday needs a little light. Tap each flame to put it out.
+      </p>
+
+      <div class="cake" aria-label="Birthday cake with five candles">
+        <div class="candles">
+          <button class="candle" type="button" aria-label="Blow out candle 1" aria-pressed="false">
+            <span class="flame"></span><span class="wick"></span>
+          </button>
+          <button class="candle" type="button" aria-label="Blow out candle 2" aria-pressed="false">
+            <span class="flame"></span><span class="wick"></span>
+          </button>
+          <button class="candle" type="button" aria-label="Blow out candle 3" aria-pressed="false">
+            <span class="flame"></span><span class="wick"></span>
+          </button>
+          <button class="candle" type="button" aria-label="Blow out candle 4" aria-pressed="false">
+            <span class="flame"></span><span class="wick"></span>
+          </button>
+          <button class="candle" type="button" aria-label="Blow out candle 5" aria-pressed="false">
+            <span class="flame"></span><span class="wick"></span>
+          </button>
+        </div>
+        <div class="cake-top"></div>
+        <div class="cake-body"></div>
+      </div>
+
+      <div class="rps-panel" id="rpsPanel">
+        <p class="rps-round" id="rpsRound">CANDLE 1 OF 5</p>
+        <h3>Beat Miss Minute.</h3>
+        <p id="rpsStatus">Before you can put out this candle, you have to beat me at Rock, Paper, Scissors.</p>
+        <div class="rps-choices" id="rpsChoices">
+          <button type="button" class="rps-choice" data-choice="rock">Rock</button>
+          <button type="button" class="rps-choice" data-choice="paper">Paper</button>
+          <button type="button" class="rps-choice" data-choice="scissors">Scissors</button>
+        </div>
+        <div class="rps-result" id="rpsResult" aria-live="polite"></div>
+      </div>
+
+      <button class="primary-btn hidden" id="candleContinue" type="button">
+        Continue
+      </button>
+    </div>
+  </section>
+
+  <!-- AGE -->
+  <section class="experience-screen form-screen hidden" id="ageScreen">
+    <button class="back-btn" data-prev-screen="candleScreen" type="button">← Back</button>
+    <div class="mm-host" id="mmHostAge"></div>
+    <div class="form-card">
+      <p class="eyebrow">A new chapter</p>
+      <h2>How old are you now?</h2>
+      <p class="lead">No tricks. Just tell Miss Minute your new age.</p>
+
+      <form id="ageForm">
+        <label for="ageInput">Your age</label>
+        <input id="ageInput" type="number" min="1" max="120" inputmode="numeric" autocomplete="off" placeholder="18" required>
+        <button class="primary-btn" type="submit">That's My Age</button>
+      </form>
+
+      <p class="form-response" id="ageResponse"></p>
+    </div>
+  </section>
+
+  <!-- WISH -->
+  <section class="experience-screen form-screen hidden" id="wishScreen">
+    <button class="back-btn" data-prev-screen="ageScreen" type="button">← Back</button>
+    <div class="mm-host" id="mmHostWish"></div>
+    <div class="form-card wish-card">
+      <p class="eyebrow">One important rule</p>
+      <h2>Make a birthday wish.</h2>
+      <p class="lead">
+        Close your eyes for a moment. Think about what you really want from this new year.
+      </p>
+
+      <form id="wishForm">
+        <label for="wishInput">Your private wish</label>
+        <textarea id="wishInput" rows="5" maxlength="500" autocomplete="off" spellcheck="true"
+          placeholder="Write it here... Don't worry, nobody else needs to see it."></textarea>
+        <button class="primary-btn" type="submit">Seal My Wish</button>
+      </form>
+
+      <div class="wish-sealed hidden" id="wishSealed">
+        <span class="seal-icon">✓</span>
+        <h3>Your wish is sealed.</h3>
+        <p>Keep it close. The rest of your birthday experience is ready.</p>
+        <button class="primary-btn" data-next="levelHero" type="button">Continue to my birthday</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN EXPERIENCE -->
+  <main id="mainContent" class="hidden">
+
+    <audio id="birthdaySong" preload="metadata">
+      <source src="audio/birthday-song.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="music-bar">
+      <span class="music-vibe">NOW PLAYING</span>
+      <button class="music-control" id="musicToggle" type="button" aria-label="Pause birthday song">
+        <span id="musicIcon">Ⅱ</span>
+        <span id="musicLabel">Birthday song</span>
+      </button>
+    </div>
+
+    <section class="hero-section level-section" id="levelHero">
+      <div class="hero-stickers" aria-hidden="true"><span>BIG DAY ENERGY</span><span>NO SKIPPING</span></div>
+      <div class="mm-host main-mm-host" id="mmHostHero"></div>
+      <div class="hero-content">
+        <button class="back-btn back-btn-dark" data-prev="wishScreen" type="button">← Back</button>
+        <p class="eyebrow">Today is officially yours</p>
+        <h1>Happy Birthday,<br><span>Boimalyn.</span></h1>
+        <p class="hero-subtitle">Another beautiful year. Another chapter. Another chance to shine.</p>
+        <div class="hero-line"></div>
+        <button class="primary-btn hero-next" data-next="introSection" type="button">Begin the experience</button>
+      </div>
+    </section>
+
+    <section class="content-section intro-section level-section locked-level hidden" id="introSection">
+      <button class="back-btn" data-prev="levelHero" type="button">← Back</button>
+      <div class="mm-host main-mm-host" id="mmHostIntro"></div>
+      <div class="section-label">01 / A little gift</div>
+      <div class="message-card">
+        <p class="large-message">
+          I couldn't wrap a gift this year, so I built one instead.
+        </p>
+        <p>
+          It isn't expensive, it isn't wrapped, and you definitely can't return it.
+          But I made it specifically for your birthday.
+        </p>
+        <p>
+          So take your time. There are a few things waiting for you.
+        </p>
+        <button class="primary-btn level-next" data-next="questionsSection" type="button">Continue to the questions</button>
+      </div>
+    </section>
+
+    <!-- SIX QUESTIONS -->
+    <section class="content-section questions-section level-section locked-level hidden" id="questionsSection">
+      <button class="back-btn" data-prev="introSection" type="button">← Back</button>
+      <div class="mm-host main-mm-host" id="mmHostQuestions"></div>
+      <div class="section-label">02 / One last thing</div>
+
+      <div class="questions-header">
+        <p class="eyebrow">Miss Minute wants to know</p>
+        <h2>Six questions.<br>Six little choices.</h2>
+        <p>Don't overthink them. Pick whatever feels right.</p>
+      </div>
+
+      <div class="question-progress">
+        <div class="progress-meta">
+          <span id="questionCounter">01 / 06</span>
+          <span id="questionPercent">0%</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="questionProgress"></div>
+        </div>
+      </div>
+
+      <div class="question-card" id="questionCard">
+        <p class="question-number" id="questionNumber">QUESTION 01</p>
+        <h3 id="questionText">What do you want more of this year?</h3>
+        <div class="answer-grid" id="answerGrid"></div>
+      </div>
+
+      <div class="question-response" id="questionResponse" aria-live="polite"></div>
+      <button class="primary-btn level-next hidden" id="continueAfterQuestions" data-next="catGameSection" type="button">I've answered everything — continue</button>
+    </section>
+
+    <!-- CAT GAME -->
+    <section class="content-section cat-game-section level-section locked-level hidden" id="catGameSection">
+      <button class="back-btn" data-prev="questionsSection" type="button">← Back</button>
+      <div class="mm-host main-mm-host" id="mmHostCatGame"></div>
+      <div class="section-label">03 / Find the five</div>
+      <div class="section-heading">
+        <p class="eyebrow">Tiny challenge</p>
+        <h2>Find 5 cats.</h2>
+        <p>There are a bunch of suspicious little sketches below. Pick exactly five that are actually cats.</p>
+      </div>
+      <div class="cat-game-meta">
+        <span id="catCounter">0 / 5 cats found</span>
+        <span id="catGameStatus">Trust your eyes.</span>
+      </div>
+      <div class="cat-grid" id="catGrid" aria-label="Find the five cats game"></div>
+      <p class="cat-response" id="catResponse" aria-live="polite"></p>
+      <button class="primary-btn level-next hidden" id="catContinue" data-next="chapterSection" type="button">I found all 5 — continue</button>
+    </section>
+
+    <!-- CHAPTER REVEAL -->
+    <section class="chapter-section level-section hidden" id="chapterSection">
+      <button class="back-btn back-btn-dark" data-prev="catGameSection" type="button">← Back</button>
+      <div class="mm-host main-mm-host" id="mmHostChapter"></div>
+      <div class="chapter-inner">
+        <p class="eyebrow">Your new chapter</p>
+        <p class="chapter-age-label">CHAPTER</p>
+        <div class="chapter-age" id="chapterAge">18</div>
+        <div class="chapter-line"></div>
+        <h2 id="chapterTitle">My Time</h2>
+        <p id="chapterMessage">And that's the energy you're taking into this year.</p>
+        <button class="primary-btn light-btn" data-next="memorySection" type="button">
+          Continue to the memories
+        </button>
+      </div>
+    </section>
+
+    <!-- MEMORIES -->
+    <section class="content-section level-section locked-level hidden" id="memorySection">
+      <button class="back-btn" data-prev="chapterSection" type="button">← Back</button>
+      <div class="mm-host main-mm-host" id="mmHostMemory"></div>
+      <div class="section-label">04 / Little moments</div>
+      <div class="section-heading">
+        <p class="eyebrow">A few things deserve a place here</p>
+        <h2>The memory corner.</h2>
+      </div>
+
+      <div class="memory-grid">
+        <article class="memory-card memory-media-card">
+          <div class="memory-media">
+            <img src="images/birthday-portrait.png" alt="Birthday memory portrait" loading="lazy">
+          </div>
+          <div class="memory-copy">
+            <span>01 / A portrait</span>
+            <h3>A moment worth keeping.</h3>
+            <p>Some photos do not need much explanation. They simply deserve a place in the story.</p>
+          </div>
+        </article>
+
+        <article class="memory-card memory-media-card">
+          <div class="memory-media">
+            <img src="images/birthday-memory-group.png" alt="Birthday memory with friends" loading="lazy">
+          </div>
+          <div class="memory-copy">
+            <span>02 / Good people</span>
+            <h3>Good moments become memories.</h3>
+            <p>A little reminder that the people around you are part of what makes a year memorable.</p>
+          </div>
+        </article>
+
+        <article class="memory-card memory-media-card video-card">
+          <div class="memory-media">
+            <video controls playsinline preload="metadata" aria-label="Birthday memory video">
+              <source src="video/birthday-memory.mp4" type="video/mp4">
+              Your browser does not support the video element.
+            </video>
+          </div>
+          <div class="memory-copy">
+            <span>03 / In motion</span>
+            <h3>Some memories move.</h3>
+            <p>Press play when you are ready. Then continue when you have finished watching.</p>
+          </div>
+        </article>
+      </div>
+      <button class="primary-btn level-next" data-next="moodSection" type="button">I've seen the memories — continue</button>
+    </section>
+
+    <!-- MOOD -->
+    <section class="content-section choice-section level-section locked-level hidden" id="moodSection">
+      <button class="back-btn" data-prev="memorySection" type="button">← Back</button>
+      <div class="mm-host main-mm-host" id="mmHostMood"></div>
+      <div class="section-label">05 / Pick one</div>
+      <div class="section-heading">
+        <p class="eyebrow">Just for fun</p>
+        <h2>What does this year need?</h2>
+      </div>
+
+      <div class="mood-grid" id="moodGrid">
+        <button class="mood-card" data-mood="Happiness" type="button">
+          <strong>Happiness</strong><span>More reasons to smile.</span>
+        </button>
+        <button class="mood-card" data-mood="Adventure" type="button">
+          <strong>Adventure</strong><span>More places to discover.</span>
+        </button>
+        <button class="mood-card" data-mood="Growth" type="button">
+          <strong>Growth</strong><span>More becoming.</span>
+        </button>
+        <button class="mood-card" data-mood="Peace" type="button">
+          <strong>Peace</strong><span>More room to breathe.</span>
+        </button>
+      </div>
+      <p class="choice-response" id="moodResponse"></p>
+      <button class="primary-btn level-next hidden" id="moodContinue" data-next="faithSection" type="button">Continue</button>
+    </section>
+
+    <!-- FAITH -->
+    <section class="faith-section level-section locked-level hidden" id="faithSection">
+      <button class="back-btn back-btn-dark" data-prev="moodSection" type="button">← Back</button>
+      <div class="mm-host main-mm-host" id="mmHostFaith"></div>
+      <div class="faith-inner">
+        <p class="eyebrow">A prayer for your new year</p>
+        <h2>May God guide every step you take.</h2>
+        <p>
+          May this year bring you wisdom when you need it, courage when things get difficult,
+          joy in ordinary moments, and opportunities that move you closer to the life you dream about.
+        </p>
+        <button class="primary-btn light-btn level-next" data-next="finalSection" type="button">Continue to the final surprise</button>
+      </div>
+    </section>
+
+    <!-- FINAL -->
+    <section class="final-section level-section locked-level hidden" id="finalSection">
+      <button class="back-btn" data-prev="faithSection" type="button">← Back</button>
+      <div class="mm-host main-mm-host" id="mmHostFinal"></div>
+      <div class="final-card">
+        <p class="eyebrow">One final thing</p>
+        <h2>Ready?</h2>
+        <p id="finalPreview">
+          You've made your choices. Now there's one last little surprise.
+        </p>
+        <button class="primary-btn" id="finalReveal" type="button">Open It</button>
+
+        <div class="final-message hidden" id="finalMessage">
+          <div class="final-star">✦</div>
+          <h3>Happy Birthday, Boimalyn.</h3>
+          <p>
+            I hope this new chapter gives you more reasons to laugh,
+            more opportunities to grow, more memories to keep,
+            and more moments where you realize just how far you've come.
+          </p>
+          <p class="signature">Have a beautiful year.</p>
+        </div>
+
+        <div class="prayer-video-wrap hidden" id="prayerVideoWrap">
+          <div class="prayer-video-heading">
+            <p class="eyebrow">One last blessing</p>
+            <h3>A prayer for your new year.</h3>
+            <p>Before you leave, take a quiet moment and watch this prayer.</p>
+          </div>
+          <video id="prayerVideo" controls playsinline preload="metadata" poster="images/birthday-portrait.png" aria-label="Birthday prayer video">
+            <source src="video/birthday-prayer.mp4" type="video/mp4">
+            Your browser does not support this video.
+          </video>
+          <p class="prayer-video-note">No rush. Just take a moment for yourself.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>Made as a little birthday surprise.</p>
+    </footer>
+  </main>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
